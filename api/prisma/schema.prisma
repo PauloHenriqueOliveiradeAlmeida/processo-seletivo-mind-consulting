@@ -8,21 +8,25 @@ datasource db {
 }
 
 model public_tb_courses {
-  id_course          Int    @id(map: "tb_courses_pk") @default(autoincrement())
-  name_course        String @db.VarChar(60)
-  teacher_course     String @db.VarChar(80)
-  category_course    String @db.VarChar(50)
-  description_course String @db.VarChar(150)
-  image_course       String @db.VarChar
+  id_course          Int             @id(map: "tb_courses_pk") @default(autoincrement())
+  name_course        String          @db.VarChar(60)
+  teacher_course     String          @db.VarChar(80)
+  category_course    String          @db.VarChar(50)
+  description_course String          @db.VarChar(150)
+  image_course       String          @db.VarChar
+  activated_course   Boolean
+  fk_id_user         Int
+  user               public_tb_users @relation(fields: [fk_id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tb_courses_fk0")
 
   @@map("public.tb_courses")
 }
 
 model public_tb_users {
-  id_users      Int    @id(map: "tb_users_pk") @default(autoincrement())
-  name_users    String @db.VarChar(80)
-  email_users   String @db.VarChar(80)
-  password_user String @db.VarChar
+  id            Int                 @id(map: "tb_users_pk") @default(autoincrement())
+  name_user     String              @db.VarChar(80)
+  email_user    String              @db.VarChar(80)
+  password_user String              @db.VarChar
+  courses_user  public_tb_courses[]
 
   @@map("public.tb_users")
 }
